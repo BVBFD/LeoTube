@@ -26,16 +26,13 @@ app.use('/api/users', userRoutes);
 app.use('/api/videos', videoRoutes);
 app.use('/api/comments', commentRoutes);
 
-app.get(
-  '/test',
-  async (error: any, req: Request, res: Response, next: NextFunction) => {
-    try {
-      res.status(200).json('test');
-    } catch (error) {
-      throw error;
-    }
+app.get('/test', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.status(200).json('test');
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 app.use((error: ErrorType, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
