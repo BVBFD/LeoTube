@@ -3,6 +3,11 @@ import express, { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
+import authRoutes from './routes/Auth';
+import commentRoutes from './routes/Comments';
+import videoRoutes from './routes/Videos';
+import userRoutes from './routes/Users';
+
 dotenv.config();
 const app = express();
 
@@ -16,15 +21,23 @@ mongoose
 app.use(cookieParser());
 app.use(express.json());
 
-app.get('/test', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.status(200).json('test');
-  } catch (error) {
-    throw error;
-  }
-});
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/videos', videoRoutes);
+app.use('/api/comments', commentRoutes);
 
-app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+app.get(
+  '/test',
+  async (error: any, req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.status(200).json('test');
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+app.use((error: ErrorType, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
   const message = error.message || 'Something went wrong!';
   return res.status(status).json({

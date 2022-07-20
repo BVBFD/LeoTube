@@ -1,17 +1,5 @@
 import mongoose from 'mongoose';
 
-interface VideoImpl extends DocumentResult<VideoImpl> {
-  userId: string;
-  title: string;
-  desc?: string;
-  imgUrl?: string;
-  videoUrl: string;
-  views?: number;
-  tags?: string[];
-  likes?: string[];
-  dislikes?: string[];
-}
-
 const VideoSchema = new mongoose.Schema(
   {
     userId: {
@@ -54,4 +42,4 @@ const VideoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<VideoImpl>('Video', VideoSchema);
+export default mongoose.model<VideoImpl>('videos', VideoSchema);

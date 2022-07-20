@@ -1,14 +1,5 @@
 import mongoose from 'mongoose';
 
-interface UserImpl extends DocumentResult<UserImpl> {
-  name: string;
-  email: string;
-  password: string;
-  img?: string;
-  subscribers?: number;
-  subscribedUsers?: string[];
-}
-
 const UserSchema = new mongoose.Schema(
   {
     name: {
@@ -39,4 +30,4 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<UserImpl>('User', UserSchema);
+export default mongoose.model<UserImpl>('users', UserSchema);
