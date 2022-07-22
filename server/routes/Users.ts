@@ -8,21 +8,22 @@ import {
   like,
   dislike,
 } from '../controllers/User';
+import { verifyToken } from '../verifyToken';
 
 const router = Router();
 
-router.put('/:id', update);
+router.put('/:id', verifyToken, update);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', verifyToken, deleteUser);
 
 router.get('/find/:id', getUser);
 
-router.put('/sub/:id', subscribe);
+router.put('/sub/:id', verifyToken, subscribe);
 
-router.put('/unsub/:id', unsubscribe);
+router.put('/unsub/:id', verifyToken, unsubscribe);
 
-router.put('/like/:videoId', like);
+router.put('/like/:videoId', verifyToken, like);
 
-router.put('/dislike./:videoId', dislike);
+router.put('/dislike/:videoId', verifyToken, dislike);
 
 export default router;
