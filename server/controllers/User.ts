@@ -88,6 +88,7 @@ export const unsubscribe = async (
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { subscribers: -1 },
     });
+    res.status(200).json('Unsubscription success!!');
   } catch (error) {
     next(error);
   }
@@ -119,6 +120,7 @@ export const dislike = async (
       $addToSet: { dislikes: id },
       $pull: { likes: id },
     });
+    res.status(200).json('The video has been disliked.');
   } catch (error) {
     next(error);
   }
