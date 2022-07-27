@@ -1,22 +1,25 @@
+import { verifyToken } from './../verifyToken';
 import { Router, Request, Response, NextFunction } from 'express';
 import {
   addVideo,
   addView,
+  deleteVideo,
   getByTag,
   getVideo,
   random,
   search,
   sub,
   trend,
+  updateVideo,
 } from '../controllers/Video';
 
 const router = Router();
 
-router.post('/', addVideo);
+router.post('/', verifyToken, addVideo);
 
-router.put('/:id', addVideo);
+router.put('/:id', verifyToken, updateVideo);
 
-router.delete('/:id', addVideo);
+router.delete('/:id', verifyToken, deleteVideo);
 
 router.get('/find/:id', getVideo);
 
@@ -26,7 +29,7 @@ router.get('/trend', trend);
 
 router.get('/random', random);
 
-router.get('/sub', sub);
+router.get('/sub', verifyToken, sub);
 
 router.get('/tags', getByTag);
 
