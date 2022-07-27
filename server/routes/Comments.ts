@@ -1,11 +1,12 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { verifyToken } from './../verifyToken';
+import { Router } from 'express';
 import { addComment, deleteComment, getComments } from '../controllers/Comment';
 
 const router = Router();
 
-router.post('/', addComment);
+router.post('/', verifyToken, addComment);
 
-router.delete('/:id', deleteComment);
+router.delete('/:id', verifyToken, deleteComment);
 
 router.get('/:videoId', getComments);
 

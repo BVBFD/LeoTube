@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import { googleAuth, signin, signup } from '../controllers/Auth';
 
 const router = Router();
