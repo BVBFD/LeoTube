@@ -1,4 +1,5 @@
 import express from 'express';
+import session from 'express-session';
 
 declare global {
   namespace NodeJS {
@@ -65,6 +66,12 @@ declare global {
     status?: number;
     message?: string;
   };
+}
+
+declare module 'express-session' {
+  export interface SessionData {
+    num?: { id: number; name: string };
+  }
 }
 
 // 내가 임의로 만든 정의.

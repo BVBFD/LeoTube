@@ -26,6 +26,7 @@ export const signin = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log(req.session.num);
   try {
     // prettier-ignore
     const user = await User.findOne({
@@ -44,6 +45,7 @@ export const signin = async (
 
     const token = sign({ id: user._id }, process.env.JWT);
     const { password, ...others } = user._doc;
+
     res
       .cookie('access_token', token, {
         httpOnly: true,
