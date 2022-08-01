@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { createError } from '../error';
 import User from '../models/User';
 import Video from '../models/Video';
@@ -36,9 +36,20 @@ export const deleteUser = async (
   if (req.params.id === req.user.id) {
     try {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json('User has been deleted!');
+      // 세션 서버, 브라우저 삭제 과정
+      try {
+        req.session.destroy((err) => {
+          if (err) next(createError(400, err));
+          res.status(204).json('delete login data session');
+          //   res.redirect(302, '/');
+        });
+        res.clearCookie('connect.sid');
+      } catch (error) {
+        next(createError(400, `${error}`));
+      }
+      // 세션 서버, 브라우저 삭제 과정
     } catch (error) {
-      next(error);
+      next(createError(404, `Not Found`));
     }
   } else {
     return next(createError(403, 'You can update only your account'));

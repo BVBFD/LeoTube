@@ -70,7 +70,7 @@ declare global {
 
 declare module 'express-session' {
   export interface SessionData {
-    num?: { id: number; name: string };
+    token?: string;
   }
 }
 
