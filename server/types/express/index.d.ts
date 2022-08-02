@@ -8,6 +8,7 @@ declare global {
       MONGO_DB_URL: string;
       PORT: 8080;
       JWT: string;
+      SESS: string;
     }
   }
 
@@ -71,6 +72,7 @@ declare global {
 declare module 'express-session' {
   export interface SessionData {
     token?: string;
+    ip?: string | string[];
   }
 }
 

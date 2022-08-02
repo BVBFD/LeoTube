@@ -33,9 +33,9 @@ mongoose
   });
 
 const sess = {
-  secret: 'leotube',
+  secret: process.env.SESS,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     httpOnly: true,
     // maxAge: 60 * 60 * 12,

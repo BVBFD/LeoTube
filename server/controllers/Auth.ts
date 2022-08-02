@@ -46,6 +46,7 @@ export const signin = async (
     const { password, ...others } = user._doc;
 
     req.session.token = token;
+    req.session.ip = req.headers.ip;
     res.status(200).json(others);
   } catch (error) {
     next(error);

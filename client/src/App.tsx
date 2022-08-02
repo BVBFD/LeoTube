@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Cookies } from 'react-cookie';
 
 function App() {
   const [name, setName] = useState<string>('');
+  const [pwd, setPwd] = useState<string>('');
+  const [ip, setIp] = useState<string>('');
   const HOST = window.location.host;
-  const cookies = new Cookies();
+
+  useEffect(() => {
+    const getIp = async () => {
+      const ipData = await fetch('https://geolocation-db.com/json/');
+      const locationIp = await ipData.json();
+      setIp(locationIp.IPv4);
+    };
+    getIp();
+  }, []);
 
   const handleSession = async () => {
-    const res = await fetch('http://localhost:8080/usersnum', {
+    const res = await fetch('http://localhost:8080/api/auth/signin', {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         Origin: `http://${HOST}`,
+        ip,
       },
       body: JSON.stringify({
-        name: name,
+        name,
+        password: pwd,
       }),
     });
 
@@ -26,30 +37,14 @@ function App() {
     console.log(result);
   };
 
-  console.log(name);
-  const handleRemoveSession = async () => {
-    cookies.get('connect.sid');
-    try {
-      await fetch('http://localhost:8080/removeusersnum', {
-        method: 'GET',
-        credentials: 'include',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          Origin: `http://${HOST}`,
-        },
-      });
-      console.log('삭제완료');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  console.log(ip);
 
   return (
     <div className='App'>
       <input type='text' onChange={(e) => setName(e.target.value)} />
+      <input type='password' onChange={(e) => setPwd(e.target.value)} />
       <button onClick={handleSession}>App</button>
-      <button onClick={handleRemoveSession}>Remove</button>
+      <button>Remove</button>
     </div>
   );
 }

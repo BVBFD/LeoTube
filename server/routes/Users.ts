@@ -1,3 +1,4 @@
+import { verifyIp } from './../verifyIp';
 import { Router, Request, Response, NextFunction } from 'express';
 import {
   deleteUser,
@@ -14,7 +15,7 @@ const router = Router();
 
 router.put('/:id', verifyToken, update);
 
-router.delete('/:id', verifyToken, deleteUser);
+router.delete('/:id', verifyIp, verifyToken, deleteUser);
 
 router.get('/find/:id', getUser);
 
