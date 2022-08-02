@@ -38,6 +38,9 @@ function App() {
   };
 
   console.log(ip);
+  // 세션 하이제킹을 예방하기 위해 처음 로그인했을 때
+  // 원 ip주소를 클라이언트와 서버에 저장하고,
+  // 페이지가 이동할 때마다 현재 ip와 세션에 저장된 ip주소가 같은지 검사해야함
 
   return (
     <div className='App'>

@@ -14,3 +14,4 @@ export const verifyIp = async (
     next();
   }
 };
+// 백엔드 서버에서는 ip주소를 검사하는 미들웨어로 이중으로 검사할 수도 있음.
