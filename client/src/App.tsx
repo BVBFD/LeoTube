@@ -3,6 +3,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './utils/Theme';
 import './App.css';
+import Menu from './components/Menu';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Search from './pages/Search';
+import SignIn from './pages/SignIn';
+import Video from './pages/Video';
 
 const Container = styled.div`
   display: flex;
@@ -18,15 +24,30 @@ const Wrapper = styled.div`
 `;
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState<boolean>(true);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Container>
         <BrowserRouter>
-          <Routes>
-            <Route />
-          </Routes>
+          <Menu />
+          <Main>
+            <Navbar />
+            <Wrapper>
+              <Routes>
+                <Route path='/'>
+                  <Route index element={<Home />} />
+                  <Route path='trends' element={<Home />} />
+                  <Route path='subscriptions' element={<Home />} />
+                  <Route path='search' element={<Search />} />
+                  <Route path='signin' element={<SignIn />} />
+                  <Route path='video'>
+                    <Route path=':id' element={<Video />} />
+                  </Route>
+                </Route>
+              </Routes>
+            </Wrapper>
+          </Main>
         </BrowserRouter>
       </Container>
     </ThemeProvider>
