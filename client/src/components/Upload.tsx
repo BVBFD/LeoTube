@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Upload = () => {
+type UploadPropsType = {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Upload = ({ setOpen }: UploadPropsType) => {
   return (
     <div>
       <span>Upload</span>

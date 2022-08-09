@@ -21,7 +21,7 @@ import {
   VideoLibraryOutlined,
 } from '@mui/icons-material';
 
-type MenuProps = {
+type MenuPropsType = {
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -92,7 +92,7 @@ const Title = styled.h2`
   margin-bottom: 20px;
 `;
 
-const Menu = ({ darkMode, setDarkMode }: MenuProps) => {
+const Menu = ({ darkMode, setDarkMode }: MenuPropsType) => {
   const { currentUser } = useSelector((state: RootState) => state.user);
 
   return (
