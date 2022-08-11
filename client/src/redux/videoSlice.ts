@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type VideoType = {
+  _id?: string;
   userId: string;
   title: string;
   desc: string;
@@ -10,6 +11,8 @@ type VideoType = {
   tags?: string[];
   likes?: string[];
   dislikes?: string[];
+  createdAt?: Date | string | number;
+  updatedAt?: Date | string | number;
 };
 
 type VideoState = {
@@ -64,7 +67,7 @@ export const videoSlice = createSlice({
   },
 });
 
-export type { VideoState };
+export type { VideoState, VideoType };
 export const { fetchStart, fetchSuccess, fetchFailure, like, dislike } =
   videoSlice.actions;
 export default videoSlice.reducer;

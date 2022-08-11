@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 type UserType = {
+  _id?: string;
   name: string;
   email: string;
   password: string;
   img?: string;
   subscribers?: number;
   subscribedUsers?: string[];
+  createdAt?: Date | string | number;
+  updatedAt?: Date | string | number;
 };
 
 type UserState = {
@@ -56,7 +59,7 @@ export const userSlice = createSlice({
   },
 });
 
-export type { UserState };
+export type { UserState, UserType };
 export const { loginStart, loginSuccess, loginFailure, logout, subscription } =
   userSlice.actions;
 export default userSlice.reducer;
