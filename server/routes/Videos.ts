@@ -1,3 +1,4 @@
+import { verifyIp } from './../verifyIp';
 import { verifyToken } from './../verifyToken';
 import { Router, Request, Response, NextFunction } from 'express';
 import {
@@ -15,11 +16,11 @@ import {
 
 const router = Router();
 
-router.post('/', verifyToken, addVideo);
+router.post('/', verifyIp, verifyToken, addVideo);
 
-router.put('/:id', verifyToken, updateVideo);
+router.put('/:id', verifyIp, verifyToken, updateVideo);
 
-router.delete('/:id', verifyToken, deleteVideo);
+router.delete('/:id', verifyIp, verifyToken, deleteVideo);
 
 router.get('/find/:id', getVideo);
 
@@ -29,7 +30,7 @@ router.get('/trend', trend);
 
 router.get('/random', random);
 
-router.get('/sub', verifyToken, sub);
+router.get('/sub', verifyIp, verifyToken, sub);
 
 router.get('/tags', getByTag);
 

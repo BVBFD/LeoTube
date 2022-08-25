@@ -84,6 +84,7 @@ export const googleAuth = async (
       const token = sign({ id: savedUser._id }, process.env.JWT);
 
       req.session.token = token;
+      req.session.ip = req.headers.ip;
       res.status(200).json(others);
     }
   } catch (error) {

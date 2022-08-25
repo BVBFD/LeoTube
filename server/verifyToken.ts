@@ -14,7 +14,7 @@ export const verifyToken = async (
   verify(
     token,
     process.env.JWT,
-    (err: VerifyErrors | null, user: Jwt | JwtPayload | string | undefined) => {
+    (err: VerifyErrors | null, user: Jwt | JwtPayload | any | undefined) => {
       if (err) return next(createError(403, 'Token is not valid!'));
       req.user = user;
       next();

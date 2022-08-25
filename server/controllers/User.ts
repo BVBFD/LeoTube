@@ -48,6 +48,7 @@ export const deleteUser = async (
         next(createError(400, `${error}`));
       }
       // 세션 서버, 브라우저 삭제 과정
+      res.status(204).send('User has been deleted!!');
     } catch (error) {
       next(createError(404, `Not Found`));
     }
@@ -78,9 +79,11 @@ export const subscribe = async (
     await User.findByIdAndUpdate(req.user.id, {
       $push: { subscribedUsers: req.params.id },
     });
-    await User.findByIdAndUpdate(req.params.id, {
+
+    await User.findByIdAndUpdate(req.user.id, {
       $inc: { subscribers: 1 },
     });
+
     res.status(200).json('Subscription success!!');
   } catch (error) {
     next(error);
@@ -96,9 +99,14 @@ export const unsubscribe = async (
     await User.findByIdAndUpdate(req.user.id, {
       $pull: { subscribedUsers: req.params.id },
     });
+
+    const foundUser = await User.findById(req.user.id);
+    const subscribers = (foundUser as any).subscribedUsers.length;
+
     await User.findByIdAndUpdate(req.user.id, {
-      $inc: { subscribers: -1 },
+      subscribers,
     });
+
     res.status(200).json('Unsubscription success!!');
   } catch (error) {
     next(error);
