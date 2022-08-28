@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { format } from 'timeago.js';
+import axiosReq from '../config';
 import { UserType } from '../redux/userSlice';
 import { VideoType } from '../redux/videoSlice';
 
@@ -24,6 +25,7 @@ const Image = styled.img<CardPropsType>`
   height: ${(props) => (props.type === 'sm' ? '120px' : '202px')};
   background-color: #999;
   flex: 1;
+  object-fit: contain;
 `;
 
 const Details = styled.div<CardPropsType>`
@@ -64,9 +66,26 @@ const Card = ({ type, video }: CardPropsType) => {
   const [channel, setChannel] = useState<UserType>();
 
   useEffect(() => {
-    const fetchChannel = async () => {};
+    let cancelled = false;
+    const fetchChannel = async () => {
+      const res = await axiosReq({
+        method: 'GET',
+        reqUrl: `/users/find/${video?.userId}`,
+      });
+
+      if (!cancelled) {
+        setChannel(res?.data);
+      }
+    };
+
     fetchChannel();
+
+    return () => {
+      cancelled = true;
+    };
   }, [video?.userId]);
+
+  console.log(channel);
 
   return (
     <Link to={`/video/${video?._id}`} style={{ textDecoration: 'none' }}>
