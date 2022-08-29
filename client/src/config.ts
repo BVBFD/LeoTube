@@ -26,14 +26,10 @@ const axiosReq = ({ method, reqUrl, body }: AxiosReqType) => {
       return axiosInstance.get(reqUrl);
 
     case 'PUT':
-      return axiosInstance.put(reqUrl, {
-        body,
-      });
+      return axiosInstance.put(reqUrl, body);
 
     case 'POST':
-      return axiosInstance.post(reqUrl, {
-        body,
-      });
+      return axiosInstance.post(reqUrl, body);
 
     case 'DELETE':
       return axiosInstance.delete(reqUrl);
