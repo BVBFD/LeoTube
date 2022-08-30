@@ -85,8 +85,6 @@ const Card = ({ type, video }: CardPropsType) => {
     };
   }, [video?.userId]);
 
-  console.log(channel);
-
   return (
     <Link to={`/video/${video?._id}`} style={{ textDecoration: 'none' }}>
       <Container type={type}>

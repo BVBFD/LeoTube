@@ -1,14 +1,17 @@
 import {
   AccountCircleOutlined,
+  LogoutOutlined,
   SearchOutlined,
   VideoCallOutlined,
 } from '@mui/icons-material';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { RootState } from '../redux/store';
+import { logout } from '../redux/userSlice';
 import Upload from './Upload';
 
 const Container = styled.div`
@@ -51,6 +54,7 @@ const Input = styled.input`
 
 const Button = styled.button`
   padding: 5px 15px;
+  margin-left: 15px;
   background-color: transparent;
   border: 1px solid #3ea6ff;
   color: #3ea6ff;
@@ -82,6 +86,11 @@ const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [q, setQ] = useState<string>('');
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -95,11 +104,16 @@ const Navbar = () => {
             <SearchOutlined onClick={() => navigate(`/search?q=${q}`)} />
           </Search>
           {currentUser ? (
-            <User>
-              <VideoCallOutlined onClick={() => setOpen(true)} />
-              <Avatar src={currentUser.img} />
-              {currentUser.name}
-            </User>
+            <>
+              <User>
+                <VideoCallOutlined onClick={() => setOpen(true)} />
+                <Avatar src={currentUser.img} />
+                {currentUser.name}
+              </User>
+              <Button onClick={handleLogout}>
+                <LogoutOutlined />
+              </Button>
+            </>
           ) : (
             <Link to='signin' style={{ textDecoration: 'none' }}>
               <Button>

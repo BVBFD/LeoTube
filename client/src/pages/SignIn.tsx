@@ -1,6 +1,12 @@
 import React, { FormEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axiosReq from '../config';
+import { RootState } from '../redux/store';
+import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
 
 const Container = styled.div`
   display: flex;
@@ -66,10 +72,18 @@ const SignIn = () => {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const { currentUser, loading, error } = useSelector(
+    (state: RootState) => state.user
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(currentUser, loading, error);
 
   let cancelled = false;
   const handleLogin = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    dispatch(loginStart());
     try {
       const res = await axiosReq({
         method: 'POST',
@@ -77,11 +91,12 @@ const SignIn = () => {
         body: { name, password },
       });
       if (!cancelled) {
-        console.log(res?.data);
-        return;
+        dispatch(loginSuccess(res?.data));
+        return navigate('/');
       }
     } catch (error) {
       console.log(error);
+      dispatch(loginFailure());
       return;
     }
   };
@@ -106,9 +121,11 @@ const SignIn = () => {
           placeholder='password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button onClick={handleLogin}>Sign in</Button>
+        <Button disabled={loading} onClick={handleLogin}>
+          Sign in
+        </Button>
         <Title>or</Title>
-        <Button>Signin with Google</Button>
+        <Button disabled={loading}>Signin with Google</Button>
         <Title>or</Title>
         <Input
           placeholder='username'
@@ -120,7 +137,7 @@ const SignIn = () => {
           placeholder='password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button>Sign up</Button>
+        <Button disabled={loading}>Sign up</Button>
       </Wrapper>
       <More>
         <Links>
