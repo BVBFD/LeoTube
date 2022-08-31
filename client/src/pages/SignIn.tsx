@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -72,13 +73,10 @@ const SignIn = () => {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const { currentUser, loading, error } = useSelector(
-    (state: RootState) => state.user
-  );
+  const [ip, setIp] = useState<string>();
+  const { loading } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log(currentUser, loading, error);
 
   let cancelled = false;
   const handleLogin = async (e: FormEvent<HTMLButtonElement>) => {
@@ -89,6 +87,7 @@ const SignIn = () => {
         method: 'POST',
         reqUrl: 'auth/signin',
         body: { name, password },
+        ip,
       });
       if (!cancelled) {
         dispatch(loginSuccess(res?.data));
@@ -102,6 +101,16 @@ const SignIn = () => {
   };
 
   useEffect(() => {
+    const getIp = async () => {
+      const res = await axiosReq({
+        method: 'GetNormal',
+        reqUrl: 'https://geolocation-db.com/json/',
+      });
+      setIp(res?.data.IPv4);
+    };
+
+    getIp();
+
     return () => {
       cancelled = true;
     };

@@ -91,3 +91,19 @@ export const googleAuth = async (
     next(error);
   }
 };
+
+export const logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) next(createError(400, err));
+      res.status(204).json('delete login data session errors occur');
+    });
+    res.clearCookie('connect.sid');
+  } catch (error) {
+    next(createError(404, `Not Found`));
+  }
+};

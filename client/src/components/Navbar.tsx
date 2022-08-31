@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axiosReq from '../config';
 import { RootState } from '../redux/store';
 import { logout } from '../redux/userSlice';
 import Upload from './Upload';
@@ -82,14 +83,22 @@ const Avatar = styled.img`
 `;
 
 const Navbar = () => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [q, setQ] = useState<string>('');
-  const { currentUser } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      await axiosReq({
+        method: 'GET',
+        reqUrl: 'auth/logout',
+      });
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

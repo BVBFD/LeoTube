@@ -140,7 +140,7 @@ const Menu = ({ darkMode, setDarkMode }: MenuPropsType) => {
           <>
             <Login>
               Sign in to like videos, comment, and subscribe.
-              <Link to='signin'>
+              <Link to='signin' style={{ textDecoration: 'none' }}>
                 <Button>
                   <AccountCircleOutlined />
                   SIGN IN

@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 type AxiosReqType = {
-  method: 'GET' | 'PUT' | 'POST' | 'DELETE';
+  method: 'GET' | 'PUT' | 'POST' | 'DELETE' | 'GetNormal';
   reqUrl: string;
   body?: object;
+  ip?: string;
 };
 
 const baseURL = 'http://localhost:8080/api/';
@@ -18,21 +19,46 @@ const axiosConfig = {
   headers,
 };
 
-const axiosInstance = axios.create(axiosConfig);
-
-const axiosReq = ({ method, reqUrl, body }: AxiosReqType) => {
+const axiosReq = ({ method, reqUrl, body, ip }: AxiosReqType) => {
   switch (method) {
     case 'GET':
-      return axiosInstance.get(reqUrl);
+      return axios.get(reqUrl, {
+        ...axiosConfig,
+        headers: {
+          ...axiosConfig.headers,
+          ip,
+        },
+      });
 
     case 'PUT':
-      return axiosInstance.put(reqUrl, body);
+      return axios.put(reqUrl, body, {
+        ...axiosConfig,
+        headers: {
+          ...axiosConfig.headers,
+          ip,
+        },
+      });
 
     case 'POST':
-      return axiosInstance.post(reqUrl, body);
+      return axios.post(reqUrl, body, {
+        ...axiosConfig,
+        headers: {
+          ...axiosConfig.headers,
+          ip,
+        },
+      });
 
     case 'DELETE':
-      return axiosInstance.delete(reqUrl);
+      return axios.delete(reqUrl, {
+        ...axiosConfig,
+        headers: {
+          ...axiosConfig.headers,
+          ip,
+        },
+      });
+
+    case 'GetNormal':
+      return axios.get(reqUrl);
 
     default:
       return;
