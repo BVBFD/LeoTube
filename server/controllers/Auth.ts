@@ -63,16 +63,23 @@ export const googleAuth = async (
     const user = await User.findOne({
       email: req.body.email,
     }) as unknown as UserImpl;
-    const { password, ...others } = user._doc;
+    console.log(user);
 
     if (user) {
+      const { password, ...others } = user._doc;
       const token = sign({ id: user._id }, process.env.JWT);
-      res
-        .cookie('access_token', token, {
-          httpOnly: true,
-        })
-        .status(200)
-        .json(others);
+      // * 쿠키
+      // res
+      //   .cookie('access_token', token, {
+      //     httpOnly: true,
+      //   })
+      //   .status(200)
+      //   .json(others);
+
+      // * 세션
+      req.session.token = token;
+      req.session.ip = req.headers.ip;
+      res.status(200).json(others);
     } else {
       const newUser = new User({
         ...req.body,
@@ -82,7 +89,7 @@ export const googleAuth = async (
       const { password, ...others } = savedUser._doc;
 
       const token = sign({ id: savedUser._id }, process.env.JWT);
-
+      console.log(token, req.headers.ip);
       req.session.token = token;
       req.session.ip = req.headers.ip;
       res.status(200).json(others);

@@ -4,7 +4,7 @@ type AxiosReqType = {
   method: 'GET' | 'PUT' | 'POST' | 'DELETE' | 'GetNormal';
   reqUrl: string;
   body?: object;
-  ip?: string;
+  ip?: any;
 };
 
 const baseURL = 'http://localhost:8080/api/';

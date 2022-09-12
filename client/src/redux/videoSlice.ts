@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TDate } from 'timeago.js';
 
 type VideoType = {
   _id?: string;
@@ -11,7 +12,7 @@ type VideoType = {
   tags?: string[];
   likes?: string[];
   dislikes?: string[];
-  createdAt?: Date | string | number;
+  createdAt?: any;
   updatedAt?: Date | string | number;
 };
 

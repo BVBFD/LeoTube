@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -8,6 +7,9 @@ import styled from 'styled-components';
 import axiosReq from '../config';
 import { RootState } from '../redux/store';
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
+import { auth, provider } from '../firebase';
+import { signInWithPopup } from 'firebase/auth';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -100,6 +102,33 @@ const SignIn = () => {
     }
   };
 
+  const signInWithGoogle = async (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(loginStart());
+    const result = await signInWithPopup(auth, provider);
+
+    try {
+      const res = await axiosReq({
+        method: 'POST',
+        reqUrl: 'auth/google',
+        body: {
+          name: result.user.displayName,
+          email: result.user.email,
+          img: result.user.photoURL,
+        },
+        ip,
+      });
+      if (!cancelled) {
+        dispatch(loginSuccess(res?.data));
+        return navigate('/');
+      }
+    } catch (error) {
+      console.log(error);
+      dispatch(loginFailure());
+      return;
+    }
+  };
+
   useEffect(() => {
     const getIp = async () => {
       const res = await axiosReq({
@@ -114,7 +143,7 @@ const SignIn = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [loading]);
 
   return (
     <Container>
@@ -134,7 +163,9 @@ const SignIn = () => {
           Sign in
         </Button>
         <Title>or</Title>
-        <Button disabled={loading}>Signin with Google</Button>
+        <Button disabled={loading} onClick={signInWithGoogle}>
+          Signin with Google
+        </Button>
         <Title>or</Title>
         <Input
           placeholder='username'
