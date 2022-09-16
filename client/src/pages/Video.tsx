@@ -2,12 +2,21 @@ import {
   AddTaskOutlined,
   ReplyOutlined,
   ThumbDown,
+  ThumbDownOutlined,
   ThumbUp,
+  ThumbUpOutlined,
 } from '@mui/icons-material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Comments from '../components/Comments';
 import Recommendation from '../components/Recommendation';
+import axiosReq from '../config';
+import { RootState } from '../redux/store';
+import { UserType } from '../redux/userSlice';
+import { fetchSuccess } from '../redux/videoSlice';
 
 const Container = styled.div`
   display: flex;
@@ -110,21 +119,61 @@ const VideoFrame = styled.video`
 `;
 
 const Video = () => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const { currentVideo } = useSelector((state: RootState) => state.video);
+  const dispatch = useDispatch();
+  const path = useLocation().pathname.split('/')[2];
+  const [channel, setChannel] = useState<UserType>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const videoRes = await axiosReq({
+          method: 'GET',
+          reqUrl: `videos/find/${path}`,
+        });
+
+        const { userId } = videoRes?.data;
+        const channelRes = await axiosReq({
+          method: 'GET',
+          reqUrl: `users/find/${userId}`,
+        });
+
+        dispatch(fetchSuccess(videoRes?.data));
+        setChannel(channelRes?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [path, dispatch]);
+
+  console.log(currentVideo);
+
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame controls />
+          <VideoFrame src={currentVideo?.videoUrl} controls />
         </VideoWrapper>
-        <Title>VideoModel</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
-          <Info>Hi good to meet you</Info>
+          <Info>{currentVideo?.desc}</Info>
           <Buttons>
             <Button>
-              <ThumbUp />
+              {currentVideo?.likes?.includes(currentUser?._id as any) ? (
+                <ThumbUp />
+              ) : (
+                <ThumbUpOutlined />
+              )}
             </Button>
             <Button>
-              <ThumbDown />
+              {currentVideo?.dislikes?.includes(currentUser?._id as any) ? (
+                <ThumbDown />
+              ) : (
+                <ThumbDownOutlined />
+              )}
             </Button>
             <Button>
               <ReplyOutlined />
@@ -137,11 +186,13 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image />
+            <Image src={channel?.img} />
             <ChannelDetail>
-              <ChannelName>LSE126</ChannelName>
-              <ChannelCounter>lse126 subscribers</ChannelCounter>
-              <Description>This is lse126 videos</Description>
+              <ChannelName>{channel?.name}</ChannelName>
+              <ChannelCounter>
+                {channel?.subscribedUsers?.length}
+              </ChannelCounter>
+              <Description>{channel?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe>SUBSCRIBE</Subscribe>
@@ -149,7 +200,7 @@ const Video = () => {
         <Hr />
         <Comments />
       </Content>
-      <Recommendation />
+      {/* <Recommendation /> */}
     </Container>
   );
 };

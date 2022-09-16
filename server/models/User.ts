@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    desc: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

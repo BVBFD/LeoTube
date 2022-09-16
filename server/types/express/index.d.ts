@@ -32,6 +32,7 @@ declare global {
     subscribers?: number;
     subscribedUsers?: string[];
     fromGoogle?: boolean;
+    desc?: string;
     createdAt?: number;
     updatedAt?: number;
     _v?: Int32List;

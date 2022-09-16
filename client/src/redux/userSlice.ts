@@ -8,6 +8,8 @@ type UserType = {
   img?: string;
   subscribers?: number;
   subscribedUsers?: string[];
+  fromGoogle?: boolean;
+  desc?: string;
   createdAt?: Date | string | number;
   updatedAt?: Date | string | number;
 };
