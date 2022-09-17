@@ -16,7 +16,13 @@ import Recommendation from '../components/Recommendation';
 import axiosReq from '../config';
 import { RootState } from '../redux/store';
 import { UserType } from '../redux/userSlice';
-import { fetchSuccess } from '../redux/videoSlice';
+import {
+  fetchSuccess,
+  like,
+  dislike,
+  pullLike,
+  pullDislike,
+} from '../redux/videoSlice';
 
 const Container = styled.div`
   display: flex;
@@ -124,6 +130,7 @@ const Video = () => {
   const dispatch = useDispatch();
   const path = useLocation().pathname.split('/')[2];
   const [channel, setChannel] = useState<UserType>();
+  const [ip, setIp] = useState<any>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,7 +156,53 @@ const Video = () => {
     fetchData();
   }, [path, dispatch]);
 
-  console.log(currentVideo);
+  useEffect(() => {
+    const getIp = async () => {
+      const res = await axiosReq({
+        method: 'GetNormal',
+        reqUrl: 'https://geolocation-db.com/json/',
+      });
+      setIp(res?.data.IPv4);
+    };
+
+    getIp();
+  }, [path, dispatch]);
+
+  const handleLike = async () => {
+    if (currentVideo?.likes?.includes(`${currentUser?._id}`)) {
+      await axiosReq({
+        method: 'PUT',
+        reqUrl: `users/pullLike/${currentVideo?._id}`,
+        ip,
+      });
+      dispatch(pullLike(currentUser?._id));
+    } else {
+      await axiosReq({
+        method: 'PUT',
+        reqUrl: `users/like/${currentVideo?._id}`,
+        ip,
+      });
+      dispatch(like(currentUser?._id));
+    }
+  };
+
+  const handleDislike = async () => {
+    if (currentVideo?.dislikes?.includes(`${currentUser?._id}`)) {
+      await axiosReq({
+        method: 'PUT',
+        reqUrl: `users/pullDislike/${currentVideo?._id}`,
+        ip,
+      });
+      dispatch(pullDislike(currentUser?._id));
+    } else {
+      await axiosReq({
+        method: 'PUT',
+        reqUrl: `users/dislike/${currentVideo?._id}`,
+        ip,
+      });
+      dispatch(dislike(currentUser?._id));
+    }
+  };
 
   return (
     <Container>
@@ -161,14 +214,15 @@ const Video = () => {
         <Details>
           <Info>{currentVideo?.desc}</Info>
           <Buttons>
-            <Button>
+            <Button onClick={handleLike}>
               {currentVideo?.likes?.includes(currentUser?._id as any) ? (
                 <ThumbUp />
               ) : (
                 <ThumbUpOutlined />
               )}
+              {currentVideo?.likes?.length}
             </Button>
-            <Button>
+            <Button onClick={handleDislike}>
               {currentVideo?.dislikes?.includes(currentUser?._id as any) ? (
                 <ThumbDown />
               ) : (
@@ -190,7 +244,7 @@ const Video = () => {
             <ChannelDetail>
               <ChannelName>{channel?.name}</ChannelName>
               <ChannelCounter>
-                {channel?.subscribedUsers?.length}
+                {channel?.subscribedUsers?.length} subscribers
               </ChannelCounter>
               <Description>{channel?.desc}</Description>
             </ChannelDetail>

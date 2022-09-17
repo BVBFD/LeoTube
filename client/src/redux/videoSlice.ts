@@ -54,6 +54,14 @@ export const videoSlice = createSlice({
         );
       }
     },
+    pullLike: (state, action) => {
+      state.currentVideo?.likes?.splice(
+        state.currentVideo?.likes.findIndex(
+          (userId) => userId === action.payload
+        ),
+        1
+      );
+    },
     dislike: (state, action) => {
       if (!state.currentVideo?.dislikes?.includes(action.payload)) {
         state.currentVideo?.dislikes?.push(action.payload);
@@ -65,10 +73,25 @@ export const videoSlice = createSlice({
         );
       }
     },
+    pullDislike: (state, action) => {
+      state.currentVideo?.dislikes?.splice(
+        state.currentVideo?.dislikes?.findIndex(
+          (userId) => userId === action.payload
+        ),
+        1
+      );
+    },
   },
 });
 
 export type { VideoState, VideoType };
-export const { fetchStart, fetchSuccess, fetchFailure, like, dislike } =
-  videoSlice.actions;
+export const {
+  fetchStart,
+  fetchSuccess,
+  fetchFailure,
+  like,
+  pullLike,
+  dislike,
+  pullDislike,
+} = videoSlice.actions;
 export default videoSlice.reducer;

@@ -127,6 +127,23 @@ export const like = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+export const pullLike = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.user.id;
+  const videoId = req.params.videoId;
+  try {
+    await Video.findByIdAndUpdate(videoId, {
+      $pull: { likes: id },
+    });
+    res.status(200).json('The video has pulled likes!!');
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const dislike = async (
   req: Request,
   res: Response,
@@ -140,6 +157,23 @@ export const dislike = async (
       $pull: { likes: id },
     });
     res.status(200).json('The video has been disliked.');
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const pullDislike = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.user.id;
+  const videoId = req.params.videoId;
+  try {
+    await Video.findByIdAndUpdate(videoId, {
+      $pull: { dislikes: id },
+    });
+    res.status(200).json('The video has pulled dislikes!!');
   } catch (error) {
     next(error);
   }
