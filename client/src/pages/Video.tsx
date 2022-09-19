@@ -23,6 +23,11 @@ import {
   pullLike,
   pullDislike,
 } from '../redux/videoSlice';
+import { subscription } from '../redux/userSlice';
+
+type SubsProps = {
+  clr?: boolean;
+};
 
 const Container = styled.div`
   display: flex;
@@ -107,8 +112,8 @@ const Description = styled.p`
   font-size: 14px;
 `;
 
-const Subscribe = styled.button`
-  background-color: #cc1a00;
+const Subscribe = styled.button<SubsProps>`
+  background-color: ${(props) => (props.clr ? '#5f5f5f' : '#cc1a00')};
   font-weight: 500;
   color: white;
   border: none;
@@ -204,6 +209,23 @@ const Video = () => {
     }
   };
 
+  const handleSub = async () => {
+    currentUser?.subscribedUsers?.includes(`${channel?._id}`)
+      ? await axiosReq({
+          method: 'PUT',
+          reqUrl: `users/unsub/${channel?._id}`,
+          ip,
+        })
+      : await axiosReq({
+          method: 'PUT',
+          reqUrl: `users/sub/${channel?._id}`,
+          ip,
+        });
+    dispatch(subscription(channel?._id));
+  };
+
+  console.log(currentUser?.subscribedUsers?.includes(`${channel?._id}`));
+
   return (
     <Container>
       <Content>
@@ -249,7 +271,14 @@ const Video = () => {
               <Description>{channel?.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          <Subscribe
+            onClick={handleSub}
+            clr={currentUser?.subscribedUsers?.includes(`${channel?._id}`)}
+          >
+            {currentUser?.subscribedUsers?.includes(`${channel?._id}`)
+              ? 'SUBSCRIBED'
+              : 'SUBSCRIBE'}
+          </Subscribe>
         </Channel>
         <Hr />
         <Comments />
