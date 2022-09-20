@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axiosReq from '../config';
+import { UserType } from '../redux/userSlice';
+import { CommentPropsType } from './Comments';
+import { format } from 'timeago.js';
+
+type CommentObjPropsType = { comment: CommentPropsType };
 
 const Container = styled.div`
   display: flex;
@@ -36,15 +42,29 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-const Comment = () => {
+const Comment = ({ comment }: CommentObjPropsType) => {
+  const [channel, setChannel] = useState<UserType>();
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      const res = await axiosReq({
+        method: 'GET',
+        reqUrl: `users/find/${comment?.userId}`,
+      });
+      setChannel(res?.data);
+    };
+    fetchComment();
+  }, []);
+
   return (
     <Container>
-      <Avatar />
+      <Avatar src={channel?.img} />
       <Details>
         <Name>
-          Lee Seong Eun<Date>1 day ago</Date>
+          {channel?.name}
+          <Date>{format(`${channel?.createdAt}`)}</Date>
         </Name>
-        <Text>This is my Youtube Channel</Text>
+        <Text>{comment.desc}</Text>
       </Details>
     </Container>
   );

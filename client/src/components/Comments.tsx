@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import axiosReq from '../config';
+import { RootState } from '../redux/store';
 import Comment from './Comment';
+
+type CommentsPropsType = {
+  videoId?: string;
+};
+
+type CommentPropsType = {
+  _id?: string;
+  desc?: string;
+  userId?: string;
+  videoId?: string;
+};
 
 const Container = styled.div``;
 
@@ -26,16 +40,41 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Comments = () => {
+const Comments = ({ videoId }: CommentsPropsType) => {
+  const { currentUser } = useSelector((state: RootState) => state.user);
+  const [comments, setComments] = useState<CommentPropsType[]>();
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await axiosReq({
+          method: 'GET',
+          reqUrl: `comments/${videoId}`,
+        });
+        setComments(res?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchComments();
+  }, [videoId]);
+
   return (
     <Container>
-      <NewComment>
-        <Avatar />
-        <Input placeholder='Add a comment...' />
-      </NewComment>
-      <Comment />
+      {currentUser ? (
+        <NewComment>
+          <Avatar src={currentUser?.img} />
+          <Input placeholder='Add a comment...' />
+        </NewComment>
+      ) : (
+        <></>
+      )}
+      {comments?.map((comment) => (
+        <Comment key={comment._id} comment={comment} />
+      ))}
     </Container>
   );
 };
 
+export type { CommentPropsType };
 export default Comments;

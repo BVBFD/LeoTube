@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { TDate } from 'timeago.js';
 
 type UserType = {
   _id?: string;
