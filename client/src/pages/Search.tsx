@@ -13,6 +13,7 @@ const Container = styled.div`
 
 const Search = () => {
   const [videos, setVideos] = useState<[VideoType]>();
+  // whitespace 없애기
   const query = useLocation()
     .search?.toString()
     .replaceAll('%20', '')

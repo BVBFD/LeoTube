@@ -165,6 +165,7 @@ export const search = async (
     //   title: { $regex: `${query}`, $options: 'i' },
     // }).limit(40);
 
+    // 특수문자 없애기
     const regExp = (str: string) => {
       let reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
       //특수문자 검증
@@ -183,6 +184,7 @@ export const search = async (
     videos2.forEach((video) => {
       let title = video.title
         ?.toString()
+        // whitespace 없애기
         // @ts-ignore
         .replaceAll(/\s/g, '')
         .toLowerCase();
