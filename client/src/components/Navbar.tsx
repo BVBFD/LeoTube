@@ -115,7 +115,10 @@ const Navbar = () => {
           {currentUser ? (
             <>
               <User>
-                <VideoCallOutlined onClick={() => setOpen(true)} />
+                <VideoCallOutlined
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setOpen(true)}
+                />
                 <Avatar src={currentUser.img} />
                 {currentUser.name}
               </User>

@@ -230,7 +230,11 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo?.videoUrl} controls />
+          <VideoFrame
+            src={currentVideo?.videoUrl}
+            poster={currentVideo?.imgUrl === '' ? '' : currentVideo?.imgUrl}
+            controls
+          />
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
