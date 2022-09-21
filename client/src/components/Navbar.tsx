@@ -4,7 +4,7 @@ import {
   SearchOutlined,
   VideoCallOutlined,
 } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -51,6 +51,7 @@ const Input = styled.input`
   background-color: transparent;
   outline: none;
   color: ${({ theme }) => theme.text};
+  font-size: 18px;
 `;
 
 const Button = styled.button`
@@ -89,6 +90,18 @@ const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [q, setQ] = useState<string>('');
 
+  const regExp = (str: string) => {
+    var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    //특수문자 검증
+    if (reg.test(str)) {
+      //특수문자 제거후 리턴
+      return str.replace(reg, '');
+    } else {
+      //특수문자가 없으므로 본래 문자 리턴
+      return str;
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await axiosReq({
@@ -105,12 +118,21 @@ const Navbar = () => {
     <>
       <Container>
         <Wrapper>
-          <Search>
+          <Search
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                navigate(`/search?q=${q}`);
+              }
+            }}
+          >
             <Input
               placeholder='Search'
-              onChange={(e) => setQ(e.target.value)}
+              onChange={(e) => setQ(regExp(e.target.value))}
             />
-            <SearchOutlined onClick={() => navigate(`/search?q=${q}`)} />
+            <SearchOutlined
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate(`/search?q=${q}`)}
+            />
           </Search>
           {currentUser ? (
             <>

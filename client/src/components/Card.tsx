@@ -8,7 +8,6 @@ import { VideoType } from '../redux/videoSlice';
 
 type CardPropsType = {
   type?: 'sm' | 'lg';
-  key?: string;
   video?: VideoType;
 };
 

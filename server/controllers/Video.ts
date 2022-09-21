@@ -159,12 +159,50 @@ export const search = async (
   res: Response,
   next: NextFunction
 ) => {
-  const query = req.query.q;
+  let query = req.query.q;
   try {
-    const videos = await Video.find({
-      title: { $regex: query, $options: 'i' },
-    }).limit(40);
-    res.status(200).json(videos);
+    // const videos = await Video.find({
+    //   title: { $regex: `${query}`, $options: 'i' },
+    // }).limit(40);
+
+    const regExp = (str: string) => {
+      let reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+      //특수문자 검증
+      if (reg.test(str)) {
+        //특수문자 제거후 리턴
+        return str.replace(reg, '');
+      } else {
+        //특수문자가 없으므로 본래 문자 리턴
+        return str;
+      }
+    };
+
+    const videos2 = await Video.find();
+    let newArr: any = [];
+    let sendArr: any = [];
+    videos2.forEach((video) => {
+      let title = video.title
+        ?.toString()
+        // @ts-ignore
+        .replaceAll(/\s/g, '')
+        .toLowerCase();
+      title = regExp(title);
+      if (title.includes(query)) {
+        newArr.push(video);
+      }
+    });
+
+    newArr.sort((a: any, b: any) => b?.createdAt - a?.createdAt);
+
+    for (let i = 0; i < 39; i++) {
+      if (newArr[i]) {
+        sendArr.push(newArr[i]);
+      } else {
+        break;
+      }
+    }
+
+    res.status(200).json(sendArr);
   } catch (err) {
     next(err);
   }
