@@ -165,15 +165,11 @@ export const search = async (
     //   title: { $regex: `${query}`, $options: 'i' },
     // }).limit(40);
 
-    // 특수문자 없애기
     const regExp = (str: string) => {
       let reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-      //특수문자 검증
       if (reg.test(str)) {
-        //특수문자 제거후 리턴
         return str.replace(reg, '');
       } else {
-        //특수문자가 없으므로 본래 문자 리턴
         return str;
       }
     };
@@ -184,7 +180,6 @@ export const search = async (
     videos2.forEach((video) => {
       let title = video.title
         ?.toString()
-        // whitespace 없애기
         // @ts-ignore
         .replaceAll(/\s/g, '')
         .toLowerCase();

@@ -9,7 +9,6 @@ import { RootState } from '../redux/store';
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
 import { auth, provider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
-import axios from 'axios';
 
 const Container = styled.div`
   display: flex;

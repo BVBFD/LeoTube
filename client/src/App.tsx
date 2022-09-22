@@ -9,8 +9,6 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import SignIn from './pages/SignIn';
 import Video from './pages/Video';
-import { useSelector } from 'react-redux';
-import { RootState } from './redux/store';
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +25,6 @@ const Wrapper = styled.div`
 
 function App() {
   const [darkMode, setDarkMode] = useState<boolean>(true);
-  const { currentUser } = useSelector((state: RootState) => state.user);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>

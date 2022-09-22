@@ -90,15 +90,11 @@ const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [q, setQ] = useState<string>('');
 
-  // 특수 문자 제거하기
   const regExp = (str: string) => {
     var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-    //특수문자 검증
     if (reg.test(str)) {
-      //특수문자 제거후 리턴
       return str.replace(reg, '');
     } else {
-      //특수문자가 없으므로 본래 문자 리턴
       return str;
     }
   };

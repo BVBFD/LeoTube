@@ -7,8 +7,6 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import app from '../firebase';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 import { useNavigate } from 'react-router-dom';
 import axiosReq from '../config';
 
@@ -128,7 +126,7 @@ const Upload = ({ setOpen }: UploadPropsType) => {
     }
   };
 
-  // https://firebase.google.com/docs/storage/web/upload-files?authuser=0 참고함
+  // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
   const uploadFile = (file: File, urlType: string) => {
     const storage = getStorage(app);
     const fileName = `${new Date().getTime()}${file?.name}`;

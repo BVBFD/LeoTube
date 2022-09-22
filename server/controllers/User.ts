@@ -36,7 +36,7 @@ export const deleteUser = async (
   if (req.params.id === req.user.id) {
     try {
       await User.findByIdAndDelete(req.params.id);
-      // 세션 서버, 브라우저 삭제 과정
+
       try {
         req.session.destroy((err) => {
           if (err) next(createError(400, err));
@@ -47,7 +47,7 @@ export const deleteUser = async (
       } catch (error) {
         next(createError(400, `${error}`));
       }
-      // 세션 서버, 브라우저 삭제 과정
+
       res.status(204).send('User has been deleted!!');
     } catch (error) {
       next(createError(404, `Not Found`));

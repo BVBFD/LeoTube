@@ -68,7 +68,7 @@ export const googleAuth = async (
     if (user) {
       const { password, ...others } = user._doc;
       const token = sign({ id: user._id }, process.env.JWT);
-      // * 쿠키
+
       // res
       //   .cookie('access_token', token, {
       //     httpOnly: true,
@@ -76,7 +76,6 @@ export const googleAuth = async (
       //   .status(200)
       //   .json(others);
 
-      // * 세션
       req.session.token = token;
       req.session.ip = req.headers.ip;
       res.status(200).json(others);

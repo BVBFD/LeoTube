@@ -76,7 +76,3 @@ declare module 'express-session' {
     ip?: string | string[];
   }
 }
-
-// 내가 임의로 만든 정의.
-// declare global로 기존에 정의되어있던
-// 인터페이스를 확장했음.

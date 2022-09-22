@@ -27,8 +27,6 @@ const Recommendation = ({ tags }: RecommendationPropsType) => {
     fetchVideos();
   }, [tags]);
 
-  console.log(videos);
-
   return (
     <Container>
       {videos?.map((video) => (
