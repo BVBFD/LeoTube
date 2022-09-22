@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 `;
-
+//
 type HomePropsType = {
   type: 'random' | 'trend' | 'sub';
 };
