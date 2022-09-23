@@ -16,7 +16,7 @@ import userRoutes from './routes/Users';
 import cors from 'cors';
 
 const corsOpt = {
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://37.44.244.229:81'],
   optionsSuccessStatus: 200,
   credentials: true,
 };
