@@ -24,6 +24,7 @@ import {
   pullDislike,
 } from '../redux/videoSlice';
 import { subscription } from '../redux/userSlice';
+import { mobile } from '../utils/responsive';
 
 type SubsProps = {
   clr?: boolean;
@@ -32,10 +33,17 @@ type SubsProps = {
 const Container = styled.div`
   display: flex;
   gap: 24px;
+  ${mobile(800, {
+    flexDirection: 'column',
+    height: '100vh',
+  })}
 `;
 
 const Content = styled.div`
   flex: 5;
+  ${mobile(800, {
+    flex: 1,
+  })}
 `;
 const VideoWrapper = styled.div``;
 

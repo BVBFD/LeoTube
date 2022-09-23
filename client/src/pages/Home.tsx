@@ -3,13 +3,20 @@ import styled from 'styled-components';
 import Card from '../components/Card';
 import axiosReq from '../config';
 import { VideoType } from '../redux/videoSlice';
+import { mobile } from '../utils/responsive';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  ${mobile(800, {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '100%',
+  })}
 `;
-//
+
 type HomePropsType = {
   type: 'random' | 'trend' | 'sub';
 };

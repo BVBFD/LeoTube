@@ -4,7 +4,7 @@ import {
   SearchOutlined,
   VideoCallOutlined,
 } from '@mui/icons-material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import axiosReq from '../config';
 import { RootState } from '../redux/store';
 import { logout } from '../redux/userSlice';
+import { mobile } from '../utils/responsive';
 import Upload from './Upload';
 
 const Container = styled.div`
@@ -29,6 +30,8 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 0px 20px;
   position: relative;
+  ${mobile(800, { justifyContent: 'space-between' })}
+  ${mobile(500, { padding: '0' })}
 `;
 
 const Search = styled.div`
@@ -44,6 +47,9 @@ const Search = styled.div`
   border: 1px solid #ccc;
   border-radius: 3px;
   color: ${({ theme }) => theme.text};
+  ${mobile(1300, { width: '40%', left: '-20%' })}
+  ${mobile(800, { width: '45%', left: '15%' })}
+  ${mobile(500, { width: '220px', left: '20%' })}
 `;
 
 const Input = styled.input`
@@ -66,6 +72,12 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  ${mobile(500, {
+    width: 'fitContents',
+    padding: '5px 5px',
+    marginLeft: '5px',
+  })}
 `;
 
 const User = styled.div`

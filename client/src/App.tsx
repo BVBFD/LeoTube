@@ -16,11 +16,12 @@ const Container = styled.div`
 
 const Main = styled.div`
   flex: 7;
-  background-color: ${({ theme }) => theme.bg};
 `;
 
 const Wrapper = styled.div`
   padding: 22px 96px;
+  height: calc(100% + 56px);
+  background-color: ${({ theme }) => theme.bg};
 `;
 
 function App() {

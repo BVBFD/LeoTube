@@ -20,6 +20,7 @@ import {
   SubscriptionsOutlined,
   VideoLibraryOutlined,
 } from '@mui/icons-material';
+import { mobile } from '../utils/responsive';
 
 type MenuPropsType = {
   darkMode: boolean;
@@ -34,6 +35,7 @@ const Container = styled.div`
   font-size: 14px;
   position: sticky;
   top: 0;
+  ${mobile(800, { display: 'none' })};
 `;
 
 const Wrapper = styled.div`
