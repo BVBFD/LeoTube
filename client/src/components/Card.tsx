@@ -106,7 +106,7 @@ const Card = ({ type, video }: CardPropsType) => {
   return (
     <Link
       to={`/video/${video?._id}`}
-      style={{ textDecoration: 'none', margin: 'auto' }}
+      style={{ textDecoration: 'none', marginRight: '96px' }}
     >
       <Container type={type}>
         <Image type={type} src={video?.imgUrl} />
