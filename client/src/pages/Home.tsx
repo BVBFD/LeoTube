@@ -7,10 +7,14 @@ import { mobile } from '../utils/responsive';
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  ${mobile(1300, {
+    justifyContent: 'space-between',
+  })}
   ${mobile(800, {
     display: 'flex',
+    justifyContent: 'space-between',
     flexDirection: 'column',
     alignItems: 'center',
   })}
