@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 0px 20px;
   position: relative;
+  ${mobile(1300, { width: '100vw' })}
   ${mobile(800, { justifyContent: 'space-between' })}
   ${mobile(500, { padding: '0' })}
 `;
@@ -47,8 +48,8 @@ const Search = styled.div`
   border: 1px solid #ccc;
   border-radius: 3px;
   color: ${({ theme }) => theme.text};
-  ${mobile(1300, { width: '40%', left: '-20%' })}
-  ${mobile(800, { width: '45%', left: '15%' })}
+  ${mobile(1300, { width: '40%' })}
+  ${mobile(800, { width: '35%' })}
 `;
 
 const Input = styled.input`
@@ -74,9 +75,11 @@ const Button = styled.button`
   gap: 5px;
 
   ${mobile(500, {
-    width: 'fitContents',
+    width: 'fitContent',
     padding: '5px 5px',
-    marginLeft: '5px',
+    marginRight: '15px',
+    position: 'relative',
+    right: '5%',
   })}
 `;
 
@@ -86,6 +89,9 @@ const User = styled.div`
   gap: 10px;
   font-weight: 500;
   color: ${({ theme }) => theme.text};
+  ${mobile(1300, {
+    display: 'none',
+  })}
 `;
 
 const Avatar = styled.img`
@@ -96,6 +102,25 @@ const Avatar = styled.img`
   ${mobile(500, {
     display: 'none',
   })}
+`;
+
+const Home = styled.button`
+  position: absolute;
+  top: 14px;
+  left: 0;
+  z-index: 99999999999999;
+
+  padding: 5px 15px;
+  margin-left: 15px;
+  background-color: transparent;
+  border: 1px solid #3ea6ff;
+  color: #3ea6ff;
+  border-radius: 3px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const Navbar = () => {
@@ -130,6 +155,9 @@ const Navbar = () => {
     <>
       <Container>
         <Wrapper>
+          <Link to='/'>
+            <Home>Home</Home>
+          </Link>
           <Search
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
@@ -162,10 +190,7 @@ const Navbar = () => {
             </>
           ) : (
             <Link to='signin' style={{ textDecoration: 'none' }}>
-              <Button>
-                <AccountCircleOutlined />
-                SIGN IN
-              </Button>
+              <Button>SIGN IN</Button>
             </Link>
           )}
         </Wrapper>

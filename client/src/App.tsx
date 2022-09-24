@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from './utils/Theme';

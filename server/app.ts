@@ -60,13 +60,16 @@ app.use('/api/users', userRoutes);
 app.use('/api/videos', videoRoutes);
 app.use('/api/comments', commentRoutes);
 
-app.get('/test', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.status(200).json('test');
-  } catch (error) {
-    next(error);
+app.get(
+  '/api/test',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.status(200).json('test');
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 app.use((error: ErrorType, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;
@@ -78,7 +81,7 @@ app.use((error: ErrorType, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(process.env.PORT || 8081, () => {
+app.listen(process.env.PORT || 8181, () => {
   console.log('Hi Seong Eun Lee');
   console.log('Server is running');
 });

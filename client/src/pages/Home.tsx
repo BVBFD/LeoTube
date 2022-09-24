@@ -26,6 +26,19 @@ type HomePropsType = {
 
 const Home = ({ type }: HomePropsType) => {
   const [videos, setVideos] = useState<[VideoType]>();
+  const [ip, setIp] = useState();
+
+  useEffect(() => {
+    const getIp = async () => {
+      const res = await axiosReq({
+        method: 'GetNormal',
+        reqUrl: 'https://geolocation-db.com/json/',
+      });
+      setIp(res?.data.IPv4);
+    };
+
+    getIp();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;

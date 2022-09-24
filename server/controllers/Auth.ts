@@ -45,8 +45,16 @@ export const signin = async (
     const token = sign({ id: user._id }, process.env.JWT);
     const { password, ...others } = user._doc;
 
+    // res
+    //   .cookie('access_token', token, {
+    //     httpOnly: true,
+    //   })
+    //   .status(200)
+    //   .json(others);
+
     req.session.token = token;
     req.session.ip = req.headers.ip;
+
     res.status(200).json(others);
   } catch (error) {
     next(error);
@@ -78,6 +86,7 @@ export const googleAuth = async (
 
       req.session.token = token;
       req.session.ip = req.headers.ip;
+
       res.status(200).json(others);
     } else {
       const newUser = new User({

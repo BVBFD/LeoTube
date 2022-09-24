@@ -7,7 +7,8 @@ type AxiosReqType = {
   ip?: any;
 };
 
-const baseURL = 'http://37.44.244.229:8181/api/';
+// const baseURL = 'http://37.44.244.229:8181/api/';
+const baseURL = 'http://localhost:8181/api/';
 const origin = window.location.host;
 const headers = {
   origin,
