@@ -35,7 +35,7 @@ const Container = styled.div`
   font-size: 14px;
   position: sticky;
   top: 0;
-  ${mobile(800, { display: 'none' })};
+  ${mobile(1300, { display: 'none' })};
 `;
 
 const Wrapper = styled.div`

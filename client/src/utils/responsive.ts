@@ -1,6 +1,6 @@
 import { CSSProp, css } from 'styled-components';
 
-export const mobile = (width: number, props: CSSProp) => {
+export const mobile = (width: number | string, props: CSSProp) => {
   switch (width) {
     case 1300:
       return css`

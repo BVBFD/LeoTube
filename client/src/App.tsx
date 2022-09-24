@@ -9,9 +9,14 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import SignIn from './pages/SignIn';
 import Video from './pages/Video';
+import { mobile } from './utils/responsive';
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  background-color: ${({ theme }) => theme.bg};
 `;
 
 const Main = styled.div`
@@ -21,7 +26,12 @@ const Main = styled.div`
 const Wrapper = styled.div`
   padding: 22px 96px;
   height: calc(100% + 56px);
-  background-color: ${({ theme }) => theme.bg};
+  ${mobile(1300, {
+    padding: '22px 22px',
+    paddingLeft: '14px',
+  })};
+  ${mobile(800, { padding: '0' })};
+  ${mobile(500, { padding: '0' })};
 `;
 
 function App() {

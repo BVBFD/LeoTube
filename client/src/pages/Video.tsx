@@ -33,6 +33,12 @@ type SubsProps = {
 const Container = styled.div`
   display: flex;
   gap: 24px;
+  ${mobile(1300, {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: '100%',
+  })}
   ${mobile(800, {
     flexDirection: 'column',
     height: '100vh',
@@ -41,8 +47,9 @@ const Container = styled.div`
 
 const Content = styled.div`
   flex: 5;
+  ${mobile(1300, { flex: '0' })}
   ${mobile(800, {
-    flex: 1,
+    flex: 0,
   })}
 `;
 const VideoWrapper = styled.div``;

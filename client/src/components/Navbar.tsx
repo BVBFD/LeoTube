@@ -49,7 +49,6 @@ const Search = styled.div`
   color: ${({ theme }) => theme.text};
   ${mobile(1300, { width: '40%', left: '-20%' })}
   ${mobile(800, { width: '45%', left: '15%' })}
-  ${mobile(500, { width: '220px', left: '20%' })}
 `;
 
 const Input = styled.input`
@@ -58,6 +57,7 @@ const Input = styled.input`
   outline: none;
   color: ${({ theme }) => theme.text};
   font-size: 18px;
+  ${mobile(500, { fontSize: 'none' })}
 `;
 
 const Button = styled.button`
@@ -93,6 +93,9 @@ const Avatar = styled.img`
   height: 32px;
   border-radius: 50%;
   background-color: #999;
+  ${mobile(500, {
+    display: 'none',
+  })}
 `;
 
 const Navbar = () => {
@@ -139,7 +142,7 @@ const Navbar = () => {
               onChange={(e) => setQ(regExp(e.target.value))}
             />
             <SearchOutlined
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', position: 'absolute', right: '0' }}
               onClick={() => navigate(`/search?q=${q}`)}
             />
           </Search>

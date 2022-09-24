@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axiosReq from '../config';
 import { VideoType } from '../redux/videoSlice';
+import { mobile } from '../utils/responsive';
 import Card from './Card';
 
 type RecommendationPropsType = {
@@ -10,6 +11,7 @@ type RecommendationPropsType = {
 
 const Container = styled.div`
   flex: 2;
+  ${mobile(1300, { flex: '0' })}
 `;
 
 const Recommendation = ({ tags }: RecommendationPropsType) => {

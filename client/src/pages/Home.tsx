@@ -13,7 +13,6 @@ const Container = styled.div`
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100%',
   })}
 `;
 

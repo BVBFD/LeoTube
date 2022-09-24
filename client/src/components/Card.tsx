@@ -5,6 +5,7 @@ import { format } from 'timeago.js';
 import axiosReq from '../config';
 import { UserType } from '../redux/userSlice';
 import { VideoType } from '../redux/videoSlice';
+import { mobile } from '../utils/responsive';
 
 type CardPropsType = {
   type?: 'sm' | 'lg';
@@ -17,14 +18,32 @@ const Container = styled.div<CardPropsType>`
   cursor: pointer;
   display: ${(props) => props.type === 'sm' && 'flex'};
   gap: 10px;
+
+  ${mobile(1300, {
+    width: '95vw',
+    alignItems: 'center',
+  })}
 `;
 
 const Image = styled.img<CardPropsType>`
-  width: 100%;
-  height: ${(props) => (props.type === 'sm' ? '120px' : '202px')};
+  width: ${(props) => (props.type === 'sm' ? '50%' : '100%')};
+  height: ${(props) => (props.type === 'sm' ? '120px' : '20vh')};
   background-color: #999;
   flex: 1;
   object-fit: contain;
+
+  ${mobile(1300, {
+    objectFit: 'cover',
+    height: '100%',
+  })}
+  ${mobile(800, {
+    objectFit: 'cover',
+    height: '25vh',
+  })}
+  ${mobile(500, {
+    objectFit: 'cover',
+    height: '15vh',
+  })}
 `;
 
 const Details = styled.div<CardPropsType>`
