@@ -4,9 +4,9 @@ import { addComment, deleteComment, getComments } from '../controllers/Comment';
 
 const router = Router();
 
-router.post('/', addComment);
+router.post('/', verifyToken, addComment);
 
-router.delete('/:id', deleteComment);
+router.delete('/:id', verifyToken, deleteComment);
 
 router.get('/:videoId', getComments);
 

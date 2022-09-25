@@ -1,5 +1,4 @@
-import { verifyIp } from './../verifyIp';
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import {
   deleteUser,
   getUser,
@@ -15,22 +14,22 @@ import { verifyToken } from '../verifyToken';
 
 const router = Router();
 
-router.put('/:id', verifyIp, verifyToken, update);
+router.put('/:id', verifyToken, update);
 
-router.delete('/:id', verifyIp, verifyToken, deleteUser);
+router.delete('/:id', verifyToken, deleteUser);
 
 router.get('/find/:id', getUser);
 
-router.put('/sub/:id', verifyIp, verifyToken, subscribe);
+router.put('/sub/:id', verifyToken, subscribe);
 
-router.put('/unsub/:id', verifyIp, verifyToken, unsubscribe);
+router.put('/unsub/:id', verifyToken, unsubscribe);
 
-router.put('/like/:videoId', verifyIp, verifyToken, like);
+router.put('/like/:videoId', verifyToken, like);
 
-router.put('/dislike/:videoId', verifyIp, verifyToken, dislike);
+router.put('/dislike/:videoId', verifyToken, dislike);
 
-router.put('/pullLike/:videoId', verifyIp, verifyToken, pullLike);
+router.put('/pullLike/:videoId', verifyToken, pullLike);
 
-router.put('/pullDislike/:videoId', verifyIp, verifyToken, pullDislike);
+router.put('/pullDislike/:videoId', verifyToken, pullDislike);
 
 export default router;

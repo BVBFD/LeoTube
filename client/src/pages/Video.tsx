@@ -174,6 +174,10 @@ const Video = () => {
     };
 
     fetchData();
+
+    return () => {
+      dispatch(fetchSuccess(null));
+    };
   }, [path, dispatch]);
 
   useEffect(() => {
