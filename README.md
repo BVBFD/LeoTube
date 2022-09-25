@@ -1,4 +1,4 @@
----
+***
 
 # LeoTube CRUD Project
 
@@ -15,8 +15,6 @@
 <br>
 
 ### 1. Login with Session Storage - MongoDB
-
----
 
 https://user-images.githubusercontent.com/83178592/192127797-18289b3c-088e-4b4f-bcbf-ad23a7a5d24d.mp4
 
