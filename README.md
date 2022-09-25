@@ -1,5 +1,3 @@
----
-
 # LeoTube CRUD Project
 
 ## Video Upload Websites
@@ -30,8 +28,6 @@ https://user-images.githubusercontent.com/83178592/192127797-18289b3c-088e-4b4f-
 <br>
 
 ### 2. Logout with Session Storage - MongoDB
-
----
 
 https://user-images.githubusercontent.com/83178592/192127800-59386317-82b7-4fa0-b08d-980976942821.mp4
 
