@@ -14,6 +14,8 @@ type CommentPropsType = {
   desc?: string;
   userId?: string;
   videoId?: string;
+  mainCommentId?: string;
+  subCommentId?: Array<string>;
 };
 
 const Container = styled.div``;
@@ -40,9 +42,34 @@ const Input = styled.input`
   width: 100%;
 `;
 
+const Button = styled.button`
+  background-color: #cc1a00;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+  bottom: 5px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #5f5f5f;
+  }
+`;
+
 const Comments = ({ videoId }: CommentsPropsType) => {
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const [comments, setComments] = useState<CommentPropsType[]>();
+  const { currentVideo } = useSelector((state: RootState) => state.video);
+  const [comments, setComments] = useState<CommentPropsType[]>([]);
+  const [newComment, setNewComment] = useState<CommentPropsType>();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -56,15 +83,41 @@ const Comments = ({ videoId }: CommentsPropsType) => {
         console.log(error);
       }
     };
+
     fetchComments();
+    setNewComment({
+      videoId: currentVideo?._id,
+    });
   }, [videoId]);
+
+  const addComment = async () => {
+    if (newComment?.desc == '' || newComment?.desc == null) {
+      return;
+    }
+
+    const res = await axiosReq({
+      method: 'POST',
+      reqUrl: `comments`,
+      body: newComment,
+    });
+    setComments([...comments, res?.data]);
+  };
 
   return (
     <Container>
       {currentUser ? (
         <NewComment>
           <Avatar src={currentUser?.img} />
-          <Input placeholder='Add a comment...' />
+          <Input
+            onChange={(e) =>
+              setNewComment({
+                ...newComment,
+                desc: e.target.value,
+              })
+            }
+            placeholder='Add a comment...'
+          />
+          <Button onClick={addComment}>Comment</Button>
         </NewComment>
       ) : (
         <></>

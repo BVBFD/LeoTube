@@ -14,6 +14,16 @@ const CommentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    mainCommentId: {
+      type: String || null,
+      required: false,
+      default: null,
+    },
+    subCommentId: {
+      type: Array<String>,
+      required: false,
+      default: [],
+    },
   },
   { timestamps: true }
 );

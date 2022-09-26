@@ -11,6 +11,7 @@ export const addComment = async (
   const newComment = new Comment({ ...req.body, userId: req.user.id });
   try {
     const savedComment = await newComment.save();
+
     res.status(200).json(savedComment);
   } catch (err) {
     next(err);

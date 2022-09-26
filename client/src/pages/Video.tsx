@@ -6,6 +6,7 @@ import {
   ThumbUp,
   ThumbUpOutlined,
 } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -136,6 +137,14 @@ const Subscribe = styled.button<SubsProps>`
   height: max-content;
   padding: 10px 20px;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: #5f5f5f;
+  }
 `;
 
 const VideoFrame = styled.video`
@@ -243,9 +252,18 @@ const Video = () => {
     dispatch(subscription(channel?._id));
   };
 
-  console.log(currentUser?.subscribedUsers?.includes(`${channel?._id}`));
-
-  return (
+  return !currentVideo ? (
+    <Container
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '80%',
+        transform: 'scale(2)',
+      }}
+    >
+      <CircularProgress />
+    </Container>
+  ) : (
     <Container>
       <Content>
         <VideoWrapper>
