@@ -81,8 +81,6 @@ https://user-images.githubusercontent.com/83178592/192129666-49f93a2e-27b8-4bdd-
 
 ---
 
-[Visit To the Leotube](http://37.44.244.229:81/)
-
 _I created this websites to practice how to upload video and image materials in the websites._
 
 _`This project is on developing.` I will develope this websites for uploading my videos for tutoring IT Tech._
